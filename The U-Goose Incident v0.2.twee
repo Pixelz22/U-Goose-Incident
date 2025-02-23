@@ -1,0 +1,348 @@
+:: StoryTitle
+The U-Goose Incident
+
+
+:: StoryData
+{
+  "ifid": "11C26199-F8A8-4DB7-8CAE-9817DA4E0450",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "#basicSetup",
+  "tag-colors": {
+    "Story-Start": "green"
+  },
+  "zoom": 1
+}
+
+
+:: #basicSetup {"position":"600,225","size":"100,100"}
+{
+<!--Basic setup page, setting up common variables and macros-->
+	(set: $eval to (macro: any-type _input, [(output-data: _input)]))
+    (set: $camelcase to (macro: str-type _input, [
+    	(set: _words to (words: _input))
+        (if: _words's length > 0)[(set: _words's 1st to (lowercase: _words's 1st))]
+    	(output-data: (joined: "", ..._words))
+    ]))
+    
+    (set: $currentLocation to "")
+    
+	(set: $dayCount to 0)
+    (set: $timeHour to 0)
+    (set: $hoursInDay to 4)
+    
+    (set: $inventory to (a: "Key", "Ball"))
+    
+    (set: $useItemDict to (dm: "Key", "Used Key", "Ramen", "Used Ramen"))
+    (set: $useItemLink to (macro: str-type _item, [ \
+    	(output:)[(link: _item)[ \
+        	(hide: ?itemWarningText) \
+        	(if: $useItemDict contains _item)[($eval: $useItemDict's _item)] \
+            (else:)[($useItemLink: _item)(show: ?itemWarningText)] \
+        ]] \
+    ]))
+    (set: $progressTime to (macro: [
+        (set: $timeHour to $timeHour + 1)
+        (if: $timeHour >= $hoursInDay)[
+        	(set: $dayCount to $dayCount + 1)
+            (set: $timeHour to $timeHour % $hoursInDay)
+        ]
+    	(output:)[]
+    ]))
+} \
+(redirect: "#uiSetup")
+
+
+:: #uiSetup {"position":"600,100","size":"100,100"}
+ <!--Defines the macro that dynamically generates the UI header--> \
+(set: $uiHeader to (macro: dm-type _directions, [ \
+(set: _conditionalPrint to (macro: str-type _dir, [ \
+	(output:)[ \
+    	(if: _directions contains _dir)[($eval: _directions's _dir)] \
+        (else:)[&nbsp;] \
+    ] \
+])) \
+(output:)[ \
+|=
+Day (print: $dayCount)
+Hour (print: $timeHour)
+
+[\
+Inventory:
+(for: each _item, ...$inventory)[ \
+	- ($useItemLink: _item)
+] \
+]<inventory|
+=||||
+<div style='text-align: center; margin-left:auto; margin-right:auto;'>\
+### Map
+<table style='border-spacing:0em; table-layout:auto; margin-left:auto; margin-right:auto; font-family:monospace'> \
+	<col span=3 style='width:33%'/>
+	<tr> \
+    	<td style="text-align:right;">(_conditionalPrint: "NW")</td> \
+    	<td>(_conditionalPrint: "N")</td> \
+    	<td style="text-align:left;">(_conditionalPrint: "NE")</td> \
+    </tr> \
+    <tr> \
+    	<td style="text-align:right;">(_conditionalPrint: "W")</td> \
+    	<td><div class="layeringParent" style="width: 440px; height: 296px;"> \
+        			(print: '<img class="baseImage" src="https://github.com/Pixelz22/U-Goose-Incident/blob/main/map-' + $currentLocation + '.png?raw=true">') \
+                    <img class="overlayImage" src="https://github.com/Pixelz22/U-Goose-Incident/blob/main/baseMap.png?raw=true"> \
+         </div></td> \
+    	<td style="text-align:left;">(_conditionalPrint: "E")</td> \
+    </tr> \
+    <tr> \
+    	<td style="text-align:right;">(_conditionalPrint: "SW")</td> \
+    	<td>(_conditionalPrint: "S")</td> \
+    	<td style="text-align:left;">(_conditionalPrint: "SE")</td> \
+    </tr> \
+</table> \
+</div> \
+|==|
+(text-color: red)[|itemWarningText)[That does nothing here.]]
+---
+]])) \
+(redirect: (passages: where its tags contains "Story-Start")'s 1st's name)
+
+
+:: Abram's Cell {"position":"950,875","size":"100,100"}
+
+
+
+:: Alley {"position":"775,725","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "E", [[West Field]],
+    "W", [[West Fence]]
+    ))
+
+
+:: Armory {"position":"1400,850","size":"100,100"}
+
+
+
+:: Common Area [Story-Start] {"position":"1150,725","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[North Field]],
+    "NE", [[Storeroom]],
+    "E", [[East Field]],
+    "S", [[South Field]],
+    "W", [[West Field]]
+    ))
+
+
+:: Corrine's Cell {"position":"750,550","size":"100,100"}
+
+
+
+:: East Field {"position":"1600,775","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Northeast Field]],
+    "E", [[Mass Grave]],
+    "S", [[Southeast Field]],
+    "SW", [[Armory]],
+    "W", [[Common Area]],
+    "NW", [[Storeroom]]
+    ))
+
+
+:: Equipment Closet {"position":"1050,450","size":"100,100"}
+
+
+
+:: Gate {"position":"1175,1125","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "NE", [[South Field]],
+    "W", [[Southwest Field]],
+    ))
+[[Logging Territory]] 
+
+
+:: Grigoriy's Cell {"position":"900,550","size":"100,100"}
+
+
+
+:: Guard's Quarters {"position":"1325,425","size":"100,100"}
+
+
+
+:: Logging Territory {"position":"1550,1550","size":"100,100"}
+
+
+
+:: Lower Shacks {"position":"850,875","size":"100,100"}
+
+
+
+:: Mass Grave {"position":"1775,750","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Northeast Field]],
+    "S", [[Southeast Field]],
+    "W", [[East Field]]
+    ))
+
+
+:: NE Guard Tower {"position":"1700,475","size":"100,100"}
+
+
+
+:: NW Guard Tower {"position":"600,375","size":"100,100"}
+
+
+
+:: North Fence {"position":"1200,325","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "E", [[Northeast Field]],
+    "SE", [[Guard's Quarters]],
+    "S", [[North Field]],
+    "W", [[Northwest Field]]
+    ))
+
+
+:: North Field {"position":"1200,500","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[North Fence]],
+    "E", [[Northeast Field]],
+    "SE", [[Guard's Quarters]],
+    "S", [[Common Area]],
+    "SW", [[Equipment Closet]],
+    "W", [[Northwest Field]]
+    ))
+
+
+:: Northeast Field {"position":"1625,550","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "S", [[East Field]],
+    "W", [[North Field]]
+    ))
+
+
+:: Northwest Field {"position":"650,425","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"NE", [[North Fence]],
+    "E", [[North Field]],
+    "S", [[West Field]],
+    "SW", [[West Fence]]
+    ))
+
+
+:: Philip's Cell {"position":"775,875","size":"100,100"}
+
+
+
+:: SE Guard Tower {"position":"1675,1100","size":"100,100"}
+
+
+
+:: SW Tower {"position":"575,1125","size":"100,100"}
+
+
+
+:: South Field {"position":"1175,975","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Common Area]],
+    "E", [[Southeast Field]],
+    "SW", [[Gate]],
+    "W", [[Southwest Field]],
+    ))
+
+
+:: Southeast Field {"position":"1625,1000","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "N", [[East Field]],
+    "W", [[South Field]]
+    ))
+
+
+:: Southwest Field {"position":"650,1075","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "N", [[West Field]],
+    "NW", [[West Fence]],
+    "E", [[South Field]]
+    ))
+
+
+:: Storeroom {"position":"1425,625","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "SE", [[East Field]],
+    "W", [[Common Area]]
+    ))
+
+
+:: UI test {"position":"325,200","size":"100,100"}
+(link: "Progress time")[
+	($progressTime:)
+    (goto: (passage:)'s name)
+]
+
+
+:: Upper Shacks {"position":"825,600","size":"100,100"}
+
+
+
+:: West Fence {"position":"600,725","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Northwest Field]],
+    "E", [[Alley]],
+    "S", [[Southwest Field]],
+    ))
+
+
+:: West Field {"position":"950,725","size":"100,100"}
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"NW", [[Upper Shacks]],
+	"N", [[Northwest Field]],
+    "E", [[Common Area]],
+    "S", [[Southwest Field]],
+    "SW", [[Lower Shacks]],
+    "W", [[Alley]],
+    ))
+
+
+:: StoryStylesheet [stylesheet]
+img {
+  image-rendering: pixelated;
+}
+
+.layeringParent {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+tw-expression {
+  width: inherit;
+  height: inherit;
+}
+
+.baseImage {
+  position: relative;
+  top: 0;
+  left: 0;
+  
+  width: inherit;
+  height: inherit;
+}
+
+.overlayImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  width: inherit;
+  height: inherit;
+}
