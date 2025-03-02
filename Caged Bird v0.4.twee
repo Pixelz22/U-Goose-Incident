@@ -1,0 +1,661 @@
+:: StoryTitle
+Caged Bird
+
+
+:: StoryData
+{
+  "ifid": "11C26199-F8A8-4DB7-8CAE-9817DA4E0450",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "#setup",
+  "tag-colors": {
+    "Story-Start": "green",
+    "Cutscene": "red"
+  },
+  "zoom": 1
+}
+
+
+:: #basicSetup {"position":"375,25","size":"100,100"}
+{
+<!--Basic setup page, setting up common variables and macros-->
+	(set: $eval to (macro: any-type _input, [(output-data: _input)]))
+    (set: $camelcase to (macro: str-type _input, [
+    	(set: _words to (words: _input))
+        (if: _words's length > 0)[(set: _words's 1st to (lowercase: _words's 1st))]
+    	(output-data: (joined: "", ..._words))
+    ]))
+    
+    (set: $mapOverlay to "outdoorsOverlay")
+    (set: $currentLocation to "")
+    
+    (set: $inventory to (a: "Key", "Ball"))
+}
+
+
+:: #narrativeSetup {"position":"775,25","size":"100,100"}
+{
+(set: $knowsGamblers to false)
+(set: $knowsCheater to false)
+(set: $hasVisitedGrave to false)
+
+(set: $abramName to "a broad-shouldered prisoner")
+(set: $grigoriyName to "a thin, hunched prisoner")
+}
+
+
+:: #setup {"position":"375,175","size":"100,100"}
+(display: "#basicSetup") \
+(display: "#timeSetup") \
+(display: "#uiSetup") \
+(display: "#narrativeSetup") \
+(redirect: (passages: where its tags contains "Story-Start")'s 1st's name)
+
+
+:: #timeSetup {"position":"525,25","size":"100,100"}
+{
+	(set: $dayCount to 1)
+    (set: $timePeriodNum to 0)
+    (set: $timeHour to 0)
+    
+    (set: $timePeriodLengths to (dm:
+  	"Morning", 3,
+    "Midday", 2,
+    "Afternoon", 4,
+    "Evening", 2,
+    "Night", 1
+  ))
+  	
+    (set: $orderedPeriods to (a:
+    "Morning",
+    "Midday",
+    "Afternoon",
+    "Evening",
+    "Night"
+  ))
+
+  
+  	(set: $getTimePeriod to (macro: [
+    	(output-data: $orderedPeriods's ($timePeriodNum + 1))
+  	]))
+    
+    (set: $progressTime to (macro: [
+        (set: $timeHour to $timeHour + 1)
+        (if: $timeHour >= $timePeriodLengths's ($orderedPeriods's ($timePeriodNum + 1)))[
+        	(set: $timePeriodNum to $timePeriodNum + 1)
+            (set: $timeHour to 0)
+        ]
+        (if: $timePeriodNum >= $orderedPeriods's length)[
+        	(set: $dayCount to $dayCount + 1)
+            (set: $timePeriodNum to 0)
+        ]
+    	(output-data: "")
+    ]))
+    
+    (set: $skipTime to (macro: bool-type _reload, [
+        (set: $timePeriodNum to $timePeriodNum + 1)
+    	(if: $timePeriodNum >= $orderedPeriods's length)[
+        	(set: $dayCount to $dayCount + 1)
+            (set: $timePeriodNum to 0)
+        ]
+        (if: _reload) [(output:)[(goto: (passage:)'s name)]]
+        (else:)[(output-data: "")]
+    ]))
+    
+    (set: $allowWarp to true)
+    (set: $warpDestinations to (dm:
+    "Night", "Night",
+    "Midday", "Logging Territory")
+  )
+    
+    (set: $timeWarp to (macro: [
+    	(if: $allowWarp and (($getTimePeriod:) is in $warpDestinations))[(set: $allowWarp to false)(output:)[(redirect: $warpDestinations's ($getTimePeriod:))]] \
+        (else-if: not $allowWarp and (($getTimePeriod:) is not in $warpDestinations))[(set: $allowWarp to true)(output:)[]]
+        (else:)[(output:)[]]
+    ]))
+    
+    (set: $showTimeMessages to (macro: [
+    	(show: (hooks-named: ($getTimePeriod:)))
+        (output:)[]
+    ]))
+}
+
+
+:: #uiSetup {"position":"650,25","size":"100,100"}
+ <!--Defines the macro that dynamically generates the UI header--> \
+(set: $uiHeader to (macro: dm-type _directions, [ \
+($timeWarp:) \
+\
+(set: _conditionalPrint to (macro: str-type _dir, [ \
+	(output:)[ \
+    	(if: _directions contains _dir)[($eval: _directions's _dir)] \
+        (else:)[&nbsp;] \
+    ] \
+])) \
+\
+(output:)[ \
+|=
+Day (print: $dayCount) - ($getTimePeriod:)
+|timeControls>[(link: "Wait around")[($skipTime: true)]]
+
+|inventory>[\
+Inventory:
+(for: each _item, ...$inventory)[ \
+	- _item
+] \
+]
+=||||
+|map>[ \
+<div style='text-align: center; margin-left:auto; margin-right:auto;'>\
+### Map
+<table style='border-spacing:0em; table-layout:auto; margin-left:auto; margin-right:auto; font-family:monospace'> \
+	<col span=3 style='width:33%'/>
+	<tr> \
+    	<td style="text-align:right;">(_conditionalPrint: "NW")</td> \
+    	<td>(_conditionalPrint: "N")</td> \
+    	<td style="text-align:left;">(_conditionalPrint: "NE")</td> \
+    </tr> \
+    <tr> \
+    	<td style="text-align:right;">(_conditionalPrint: "W")</td> \
+    	<td><div class="layeringParent" style="width: 440px; height: 296px;"> \
+        			(print: '<img class="baseImage" src="https://github.com/Pixelz22/U-Goose-Incident/blob/main/map/map-' + $currentLocation + '.png?raw=true">') \
+                    (if: $mapOverlay is not "none")[ \
+                    	(print: '<img class="overlayImage" src="https://github.com/Pixelz22/U-Goose-Incident/blob/main/map/' + $mapOverlay + '.png?raw=true">') \
+                        ] \
+         </div></td> \
+    	<td style="text-align:left;">(_conditionalPrint: "E")</td> \
+    </tr> \
+    <tr> \
+    	<td style="text-align:right;">(_conditionalPrint: "SW")</td> \
+    	<td>(_conditionalPrint: "S")</td> \
+    	<td style="text-align:left;">(_conditionalPrint: "SE")</td> \
+    </tr> \
+</table> \
+</div> \
+] \
+|==|
+(if: (passage:)'s tags contains "Cutscene")[(hide: ?timeControls)] \
+---
+]]))
+
+
+:: Abram Conversation [Cutscene] {"position":"2025,975","size":"100,100"}
+(set: $abramName to "Abram") \
+($uiHeader: (dm:))(hide: ?timeControls)
+This is your first conversation with Abram.
+(link: "...")[(go-to: (history:)'s last))]
+
+
+
+:: Alley {"position":"775,725","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "E", [[West Field]],
+    "W", [[West Fence]]
+    ))
+    
+|morning)[The shacks on either side give some shelter against the cold morning winds.
+
+(upperfirst: $grigoriyName) leans against the wall, eagerly devouring his rations.] \
+|afternoon)[A small group of prisoners clusters around $abramName as he speaks.] \
+|evening)[You see $abramName standing with one of the prisoners, listening as his yardmate speaks in hushed tones.]
+($showTimeMessages:)
+
+
+:: Call out cheater {"position":"2675,125","size":"100,100"}
+
+
+
+:: Common Area [Story-Start] {"position":"1175,750","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[North Field]],
+    "NE", [[Storeroom]],
+    "E", [[East Field]],
+    "S", [[South Field]],
+    "W", [[West Field]]
+    )) 
+|morning)[ \
+The line for the morning meal stretches out from the storeroom, where a couple guards dole out the meager rations. Those who have received their portion stand around, mindlessly nibbling.
+
+Guards chatter at the [[tables->Tables]] nearby.] \
+ \
+|midday)[] \
+ \
+|afternoon)[ \
+Prisoners sprawl across the yard, savoring what sunlight they can find.
+
+(if: $knowsGamblers)[The [[gamblers->Gamblers]] sit off in a corner, playing their game.] \
+(else:)[ \
+One [[particular group->Gamblers]] of prisoners is sitting in a circle in the largest patch of sun.]\
+] \
+ \
+|evening)[Shadows of the men grow long as they consume their dinner rations.
+
+A small group huddles at the [[tables->Tables]], whispering amongst themselves.] \
+
+($showTimeMessages:)
+
+
+
+:: East Field {"position":"1600,775","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Northeast Field]],
+    "E", [[Mass Grave]],
+    "S", [[Southeast Field]],
+    "W", [[Common Area]],
+    "NW", [[Storeroom]]
+    ))
+
+
+:: Equipment Closet {"position":"1050,450","size":"100,100"}
+
+
+
+:: Gamblers {"position":"2200,125","size":"100,100"}
+($progressTime:) \
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[North Field]],
+    "NE", [[Storeroom]],
+    "E", [[East Field]],
+    "S", [[South Field]],
+    "W", [[West Field]]
+    ))
+(if: $knowsGamblers)[Again you find the gamblers playing their rounds, the losers begrudgingly passing their bread to the victors.] \
+(else:)[As you near the group, you make out some mutterings, definitely following some sort of pattern. When you get close enough, you can see they're all holding small pieces of wood with symbols etched on their faces. You watch them slide their pieces around for a while, then suddenly one of them grins and slams down his pieces. "The pot's mine!" he says. The other prisoners groan and pass him pieces of bread, and then it hits you...
+
+they're gambling. (set: $knowsGamblers to true)]
+[[Watch them play->Gamblers1]]
+
+
+:: Gamblers1 {"position":"2375,125","size":"100,100"}
+($progressTime:) \
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to "gamblers") \
+($uiHeader: (dm:
+	"N", [[North Field]],
+    "NE", [[Storeroom]],
+    "E", [[East Field]],
+    "S", [[South Field]],
+    "W", [[West Field]]
+    ))
+As you watch, you notice that one player seems to be doing significantly better than the others.
+[[Watch some more->Gamblers2]]
+(if: $knowsCheater)[(replace: "one")[same]]
+
+
+:: Gamblers2 {"position":"2525,125","size":"100,100"}
+($progressTime:) \
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to "gamblers") \
+($uiHeader: (dm:
+	"N", [[North Field]],
+    "NE", [[Storeroom]],
+    "E", [[East Field]],
+    "S", [[South Field]],
+    "W", [[West Field]]
+    ))
+Many rounds have passed now, but out of the corner of your eye, you notice the dominant player slip something from their back pocket when they think the others aren't looking. (set: $knowsCheater to true)
+[[Call him out->Call out cheater]]
+
+
+:: Gate {"position":"1175,1125","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "NE", [[South Field]],
+    "W", [[Southwest Field]],
+    ))
+[[Logging Territory]] 
+
+
+:: Guard's Quarters {"position":"1325,425","size":"100,100"}
+
+
+
+:: Logging Territory {"position":"1550,1550","size":"100,100"}
+[[Gate]]
+
+
+:: Lower Shacks 1 {"position":"400,1150","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Lower Shacks 2]],
+    "W", [[<->Lower Shacks 6]],
+    ))
+
+
+:: Lower Shacks 2 {"position":"400,1025","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Lower Shacks 3]],
+    "E", [[West Field]],
+    "S", [[v->Lower Shacks 1]],
+    "W", [[<->Lower Shacks 4]],
+    ))
+
+
+:: Lower Shacks 3 {"position":"400,900","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "S", [[v->Lower Shacks 2]],
+    "W", [[<->Lower Shacks 5]],
+    ))
+
+
+:: Lower Shacks 4 {"position":"250,1025","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Lower Shacks 5]],
+    "E", [[>->Lower Shacks 2]],
+    "S", [[v->Lower Shacks 6]],
+    "W", "<",
+    ))
+(click-rerun: "<")[No point... it seems to extend forever.]
+
+
+:: Lower Shacks 5 {"position":"175,900","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "E", [[>->Lower Shacks 3]],
+    "S", [[v->Lower Shacks 4]],
+    "W", "<",
+    ))
+(click-rerun: "<")[No point... it seems to extend forever.]
+
+
+:: Lower Shacks 6 {"position":"175,1150","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Lower Shacks 4]],
+    "E", [[>->Lower Shacks 1]],
+    "W", "<",
+    ))
+(click-rerun: "<")[No point... it seems to extend forever.]
+
+
+:: Mass Grave {"position":"1775,750","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+(if: $hasVisitedGrave is false)[(redirect: "Mass Grave (first time)")] \
+($uiHeader: (dm:
+	"N", [[Northeast Field]],
+    "S", [[Southeast Field]],
+    "W", [[East Field]]
+    ))
+The air is thick with the stench of decay.
+|morning)[You see [[$abramName->Abram Conversation]] kneeling in the snow, praying.]
+($showTimeMessages:)
+
+
+:: Mass Grave (first time) [Cutscene] {"position":"1925,750","size":"100,100"}
+(set: $hasVisitedGrave to true) \
+($uiHeader: (dm:))
+You can't tell which disgusts you more, the vile stench or the thought of what it took to build this atrocious monument to death.
+
+[[...->Mass Grave]]
+
+
+:: NE Guard Tower {"position":"1700,475","size":"100,100"}
+
+
+
+:: NW Guard Tower {"position":"600,375","size":"100,100"}
+
+
+
+:: Night {"position":"1850,50","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to "upperShacks1") \
+($uiHeader: (dm:))(hide: ?inventory, ?timeControls)
+
+Returning to your bed, sleep quickly overtakes you.
+
+(link: "...")[($skipTime: false)+(go-to: "Upper Shacks 1"))]
+
+
+:: North Fence {"position":"1200,325","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "E", [[Northeast Field]],
+    "SE", [[Guard's Quarters]],
+    "S", [[North Field]],
+    "W", [[Northwest Field]]
+    ))
+
+
+:: North Field {"position":"1200,500","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[North Fence]],
+    "E", [[Northeast Field]],
+    "SE", [[Guard's Quarters]],
+    "S", [[Common Area]],
+    "SW", [[Equipment Closet]],
+    "W", [[Northwest Field]]
+    ))
+
+
+:: Northeast Field {"position":"1625,550","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "S", [[East Field]],
+    "W", [[North Field]]
+    ))
+
+
+:: Northwest Field {"position":"650,425","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"NE", [[North Fence]],
+    "E", [[North Field]],
+    "S", [[West Field]],
+    "SW", [[West Fence]]
+    ))
+
+
+:: SE Guard Tower {"position":"1675,1100","size":"100,100"}
+
+
+
+:: SW Tower {"position":"625,1100","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "NE", [[Southwest Field]]
+    ))
+
+
+:: South Field {"position":"1175,975","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Common Area]],
+    "E", [[Southeast Field]],
+    "SW", [[Gate]],
+    "W", [[Southwest Field]],
+    ))
+
+
+:: Southeast Field {"position":"1625,1000","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "N", [[East Field]],
+    "W", [[South Field]]
+    ))
+
+
+:: Southwest Field {"position":"725,1000","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "N", [[West Field]],
+    "NW", [[West Fence]],
+    "E", [[South Field]],
+    "SW", [[SW Tower]]
+    ))
+
+
+:: Storeroom {"position":"1425,625","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "SE", [[East Field]],
+    "W", [[Common Area]]
+    ))
+
+
+:: Tables {"position":"2300,500","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[North Field]],
+    "NE", [[Storeroom]],
+    "E", [[East Field]],
+    "S", [[South Field]],
+    "W", [[West Field]]
+    )) 
+|morning)[ \
+insert guard conversations here] \
+ \
+|evening)[insert religious group chatter here] \
+($showTimeMessages:)
+
+
+:: Upper Shacks 1 {"position":"375,750","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Upper Shacks 2]],
+    "W", [[<->Upper Shacks 6]],
+    ))
+
+
+:: Upper Shacks 2 {"position":"375,625","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Upper Shacks 3]],
+    "E", [[West Field]],
+    "S", [[v->Upper Shacks 1]],
+    "W", [[<->Upper Shacks 4]],
+    ))
+
+
+:: Upper Shacks 3 {"position":"375,500","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "S", [[v->Upper Shacks 2]],
+    "W", [[<->Upper Shacks 5]],
+    ))
+
+
+:: Upper Shacks 4 {"position":"250,625","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Upper Shacks 5]],
+    "E", [[>->Upper Shacks 2]],
+    "S", [[v->Upper Shacks 6]],
+    "W", "<",
+    ))
+(click-rerun: "<")[No point... it seems to extend forever.]
+
+
+:: Upper Shacks 5 {"position":"200,500","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+    "E", [[>->Upper Shacks 3]],
+    "S", [[v->Upper Shacks 4]],
+    "W", "<",
+    ))
+(click-rerun: "<")[No point... it seems to extend forever.]
+
+
+:: Upper Shacks 6 {"position":"175,750","size":"100,100"}
+(set: $mapOverlay to "none") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[^->Upper Shacks 4]],
+    "E", [[>->Upper Shacks 1]],
+    "W", "<",
+    ))
+(click-rerun: "<")[No point... it seems to extend forever.]
+
+
+:: West Fence {"position":"600,725","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"N", [[Northwest Field]],
+    "E", [[Alley]],
+    "S", [[Southwest Field]],
+    ))
+
+
+:: West Field {"position":"950,725","size":"100,100"}
+(set: $mapOverlay to "outdoorsOverlay") \
+(set: $currentLocation to ($camelcase: (passage:)'s name)) \
+($uiHeader: (dm:
+	"NW", [[Upper Shacks->Upper Shacks 2]],
+	"N", [[Northwest Field]],
+    "E", [[Common Area]],
+    "S", [[Southwest Field]],
+    "SW", [[Lower Shacks 2]],
+    "W", [[Alley]],
+    ))
+
+
+:: StoryStylesheet [stylesheet]
+img {
+  image-rendering: pixelated;
+}
+
+.layeringParent {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.layeringParent tw-expression, .layeringParent tw-hook {
+  position: static;
+  width: inherit;
+  height: inherit;
+}
+
+.baseImage {
+  position: relative;
+  top: 0;
+  left: 0;
+  
+  width: inherit;
+  height: inherit;
+}
+
+.overlayImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  width: inherit;
+  height: inherit;
+}
