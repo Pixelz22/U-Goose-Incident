@@ -226,14 +226,15 @@ $logicChecks \
     &quot;S&quot;, [[Southeast Field]],
     &quot;W&quot;, [[Common Area]],
     &quot;NW&quot;, [[Storeroom]]
-    ))</tw-passagedata><tw-passagedata pid="5" name="South Field" tags="Free-roam" position="1825,1025" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \
+placeholder</tw-passagedata><tw-passagedata pid="5" name="South Field" tags="Free-roam" position="1825,1025" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
 	&quot;N&quot;, [[Common Area]],
     &quot;E&quot;, [[Southeast Field]],
     &quot;SW&quot;, [[Gate Control-&gt;Gate]],
     &quot;W&quot;, [[Southwest Field]],
-    ))
+    )) \
 |morning)[ \
 	Truck arrives with stuff, guards come unload it.
     
@@ -253,7 +254,8 @@ $logicChecks \
     &quot;N&quot;, [[West Field]],
     &quot;NW&quot;, [[West Fence]],
     &quot;E&quot;, [[South Field]]
-    ))</tw-passagedata><tw-passagedata pid="7" name="North Field" tags="Free-roam" position="1700,550" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \
+placeholder</tw-passagedata><tw-passagedata pid="7" name="North Field" tags="Free-roam" position="1700,550" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
 	&quot;N&quot;, [[North Fence]],
@@ -262,7 +264,7 @@ $logicChecks \
     &quot;S&quot;, [[Common Area]],
     &quot;SW&quot;, [[Equipment Shed]],
     &quot;W&quot;, [[Northwest Field]]
-    ))
+    )) \
 |morning)[ \
 	The morning sun reveals your breath in the cold. A dilapidated shed constrasts the well-maintained building beside it.
 ] \
@@ -281,12 +283,13 @@ $logicChecks \
     &quot;E&quot;, [[North Field]],
     &quot;S&quot;, [[West Field]],
     &quot;SW&quot;, [[West Fence]]
-    ))</tw-passagedata><tw-passagedata pid="9" name="Alley" tags="Free-roam" position="1350,700" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \
+placeholder</tw-passagedata><tw-passagedata pid="9" name="Alley" tags="Free-roam" position="1350,700" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;E&quot;, [[West Field]],
     &quot;W&quot;, [[West Fence]]
-    ))
+    )) \
 |morning)[
 	The shacks on either side give some shelter against the cold morning winds.
     
@@ -320,12 +323,12 @@ $logicChecks \
     &quot;S&quot;, [[East Field]],
     &quot;SW&quot;, [[Office]],
     &quot;W&quot;, [[North Field]]
-    ))</tw-passagedata><tw-passagedata pid="11" name="Gate" tags="Free-roam" position="1675,1100" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \</tw-passagedata><tw-passagedata pid="11" name="Gate" tags="Free-roam" position="1675,1100" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;NE&quot;, [[South Field]],
     &quot;W&quot;, [[Southwest Field]],
-    ))
+    )) \
 (if: $inventory contains &quot;FM Radio&quot;)[ \
 	[[Give the guard the radio-&gt;Radio Guard]]
 ]</tw-passagedata><tw-passagedata pid="12" name="Storeroom" tags="Free-roam" position="2000,650" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
@@ -333,14 +336,16 @@ $logicChecks \
 ($uiHeader: (dm:
     &quot;SE&quot;, [[East Field]],
     &quot;W&quot;, [[Common Area]]
-    ))</tw-passagedata><tw-passagedata pid="13" name="Southeast Field" tags="Free-roam" position="2225,975" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \
+placeholder</tw-passagedata><tw-passagedata pid="13" name="Southeast Field" tags="Free-roam" position="2225,975" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;N&quot;, [[East Field]],
     &quot;W&quot;, [[South Field]]
-    ))</tw-passagedata><tw-passagedata pid="14" name="Logging Territory" tags="" position="2000,1700" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \
+placeholder</tw-passagedata><tw-passagedata pid="14" name="Logging Territory" tags="" position="2000,1700" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 
 The guards round you up and take you to the logging territory.
 
@@ -351,7 +356,7 @@ The guards round you up and take you to the logging territory.
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;S&quot;, [[North Field]],
-    ))
+    )) \
 The small equipment shed casts a long shadow.
 [
 	A guard stands in front of the door, looking bored.
@@ -370,7 +375,7 @@ The small equipment shed casts a long shadow.
 	&quot;N&quot;, [[Northeast Field]],
     &quot;S&quot;, [[Southeast Field]],
     &quot;W&quot;, [[East Field]]
-    ))
+    )) \
 The air is thick with the stench of decay. |cap)[A dark red color stands clear against the white snow.]
 |morning)[ \
 	|abram&gt;[You see [[$abramName-&gt;Abram Conversation]] kneeling in the snow, praying.]
@@ -383,7 +388,8 @@ The air is thick with the stench of decay. |cap)[A dark red color stands clear a
 	&quot;N&quot;, [[Northwest Field]],
     &quot;E&quot;, [[Alley]],
     &quot;S&quot;, [[Southwest Field]],
-    ))</tw-passagedata><tw-passagedata pid="18" name="West Field" tags="Free-roam" position="1550,700" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
+    )) \
+placeholder</tw-passagedata><tw-passagedata pid="18" name="West Field" tags="Free-roam" position="1550,700" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
 	&quot;NW&quot;, [[Upper Shacks-&gt;Upper Shacks]],
@@ -392,7 +398,7 @@ The air is thick with the stench of decay. |cap)[A dark red color stands clear a
     &quot;S&quot;, [[Southwest Field]],
     &quot;SW&quot;, [[Lower Shacks]],
     &quot;W&quot;, [[Alley]],
-    ))
+    )) \
 [ \
 |morning)[ \
 	The rays of the sunrise shine onto the short, raised buildings referred to collectively as &quot;The Shacks.&quot; One of them seems to have fallen into disrepair.
@@ -418,8 +424,8 @@ The air is thick with the stench of decay. |cap)[A dark red color stands clear a
     &quot;SE&quot;, [[Guard&#39;s Quarters]],
     &quot;S&quot;, [[North Field]],
     &quot;W&quot;, [[Northwest Field]]
-    ))
-The tower above you, topped with barbed wire.    
+    )) \
+The fence towers above you, topped with barbed wire.    
 
 A few bushes line the back of the guard&#39;s quarters: some of the only greenery in this place. They seem dense enough to hide something.
 
@@ -440,7 +446,7 @@ A few bushes line the back of the guard&#39;s quarters: some of the only greener
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;E&quot;, [[West Field]]
-    ))
+    )) \
 |morning)[The cold floorboards creak beneath you.] \
  \
 |afternoon)[ \
@@ -452,8 +458,7 @@ A few bushes line the back of the guard&#39;s quarters: some of the only greener
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;E&quot;, [[West Field]]
-    ))
-\
+    )) \
 |morning)[ \
 Bits and pieces of broken bed and floor are scattered across the floor, though small parts have been pushed aside to form some semblance of a path.
 
@@ -574,7 +579,7 @@ Bits and pieces of broken bed and floor are scattered across the floor, though s
 (display: &quot;#dailyEvents&quot;) \
 (display: &quot;#uiSetup&quot;) \
 (redirect: (passages: where its tags contains &quot;Story-Start&quot;)&#39;s 1st&#39;s name)</tw-passagedata><tw-passagedata pid="24" name="Mass Grave (first time)" tags="" position="2525,725" size="100,100">(set: $hasVisitedGrave to true) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 You can&#39;t tell which disgusts you more, the vile stench or the thought of what it took to build this atrocious monument to death.
 
 [[...-&gt;Mass Grave]]</tw-passagedata><tw-passagedata pid="25" name="#timeSetup" tags="" position="500,75" size="100,100">{
@@ -658,7 +663,7 @@ You can&#39;t tell which disgusts you more, the vile stench or the thought of wh
     ]))
 }</tw-passagedata><tw-passagedata pid="26" name="Night" tags="" position="4475,100" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 Returning to your bed, sleep quickly overtakes you.
 
 (print: ($getDream:))
@@ -672,7 +677,7 @@ Returning to your bed, sleep quickly overtakes you.
 (if: $stakeoutPlanned and not $didStakeout)[(redirect: &quot;Stakeout&quot;)]
 (if: $bushItem is &quot;Branch Cutters&quot; and $gateItem is &quot;FM Radio&quot; and $inventory contains &quot;Guard Jacket&quot; and $knowsTown)[(redirect: &quot;Escape&quot;)]</tw-passagedata><tw-passagedata pid="27" name="Tables" tags="dTree" position="2850,500" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
-($uiHeader: (dm:)) 
+($uiHeader: (dm:)) \
 |morning)[ \
 	insert guard conversations here
     
@@ -683,36 +688,36 @@ Returning to your bed, sleep quickly overtakes you.
 ] \
  \
 |evening)[($embedDialogueTree: &quot;@ChurchGroup&quot;)]
-($showTimeMessages:)</tw-passagedata><tw-passagedata pid="28" name="Gamblers" tags="" position="2850,200" size="100,100">(display: &quot;Gamblers Header&quot;)
+($showTimeMessages:)</tw-passagedata><tw-passagedata pid="28" name="Gamblers" tags="" position="2850,200" size="100,100">(display: &quot;Gamblers Header&quot;) \
 (if: $knowsGamblers)[Again you find the gamblers playing their rounds, the losers begrudgingly passing their bread to the victors.] \
 (else:)[As you near the group, you make out some mutterings, definitely following some sort of pattern. When you get close enough, you can see they&#39;re all holding small pieces of wood with symbols etched on their faces. You watch them slide their pieces around for a while, then suddenly one of them grins and slams down his pieces. &quot;The pot&#39;s mine!&quot; he says. The other prisoners groan and pass him pieces of bread, and then it hits you... they&#39;re gambling. (set: $knowsGamblers to true)]
 
 (link: &quot;Watch them play&quot;)[($progressTime:)(go-to: &quot;Gamblers1&quot;)]
-[[Leave-&gt;Common Area]]</tw-passagedata><tw-passagedata pid="29" name="Gamblers1" tags="" position="3025,150" size="100,100">(display: &quot;Gamblers Header&quot;)
+[[Leave-&gt;Common Area]]</tw-passagedata><tw-passagedata pid="29" name="Gamblers1" tags="" position="3025,150" size="100,100">(display: &quot;Gamblers Header&quot;) \
 As you watch, you notice that one player seems to be doing significantly better than the others.
 
 (link: &quot;Watch some more&quot;)[($progressTime:)(go-to: &quot;Gamblers2&quot;)]
 [[Leave-&gt;Common Area]]
-(if: $knowsCheater)[(replace: &quot;one&quot;)[same]]</tw-passagedata><tw-passagedata pid="30" name="Gamblers2" tags="" position="3175,150" size="100,100">(display: &quot;Gamblers Header&quot;)
+(if: $knowsCheater)[(replace: &quot;one&quot;)[same]]</tw-passagedata><tw-passagedata pid="30" name="Gamblers2" tags="" position="3175,150" size="100,100">(display: &quot;Gamblers Header&quot;) \
 Many rounds have passed now, but out of the corner of your eye, you notice the dominant player slip something from their back pocket when they think the others aren&#39;t looking. (set: $knowsCheater to true)
 
 [[Call him out-&gt;Call out cheater]]
-[[Leave-&gt;Common Area]]</tw-passagedata><tw-passagedata pid="31" name="Call out cheater" tags="" position="3325,150" size="100,100">(display: &quot;Gamblers Header&quot;)
+[[Leave-&gt;Common Area]]</tw-passagedata><tw-passagedata pid="31" name="Call out cheater" tags="" position="3325,150" size="100,100">(display: &quot;Gamblers Header&quot;) \
 &quot;Hey&quot; you say offhandedly. &quot;What&#39;s that you got from your pocket?&quot;
 The poker face on the winning player breaks for just a second, but he&#39;s quick to recover. &quot;I don&#39;t know what you&#39;re talking about,&quot; he asserts gruffly, but the other players aren&#39;t fooled. &quot;Pulling this again, Gorbachev?&quot; &quot;I swear I&#39;ll have your head for this!&quot; One of the prisoners dives at the cheater, hands stretched towards his throat. People try to pull them apart, blows are thrown, and it breaks into an all-out scuffle between the inmates. You see guards rush over from the north, no doubt attracted by the noise. ($startEvent: &quot;gamblersFighting&quot;)
 
 [[Wait for it to break up-&gt;Gamblers 4]]
 [[Leave-&gt;Common Area]]</tw-passagedata><tw-passagedata pid="32" name="Abram Conversation" tags="" position="2600,1000" size="100,100">(set: $abramName to &quot;Abram&quot;) \
-($uiHeader: (dm:))(hide: ?timeControls)
+($uiHeader: (dm:)) \(hide: ?timeControls)
 This is your first conversation with Abram.
 (link-reveal-goto: &quot;...&quot;, (history:)&#39;s last)[($progressTime:)]
 </tw-passagedata><tw-passagedata pid="33" name="Grigoriy (Shacks)" tags="dTree" position="800,450" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
-($embedDialogueTree: &quot;@Grigoriy&quot;)</tw-passagedata><tw-passagedata pid="34" name="Enter Fail (Shed)" tags="" position="1300,175" size="100,100">($uiHeader: (dm:))
+($uiHeader: (dm:)) \
+($embedDialogueTree: &quot;@Grigoriy&quot;)</tw-passagedata><tw-passagedata pid="34" name="Enter Fail (Shed)" tags="" position="1300,175" size="100,100">($uiHeader: (dm:)) \
 The guard glances your way as you approach and shakes his head.
 &quot;Keep walking, devushka.&quot;
-(link: &quot;...&quot;)[($progressTime:)(go-to: &quot;Equipment Shed&quot;))]</tw-passagedata><tw-passagedata pid="35" name="Enter the shed" tags="" position="1450,175" size="100,100">($uiHeader: (dm:))
+(link: &quot;...&quot;)[($progressTime:)(go-to: &quot;Equipment Shed&quot;))]</tw-passagedata><tw-passagedata pid="35" name="Enter the shed" tags="" position="1450,175" size="100,100">($uiHeader: (dm:)) \
 With the door unblocked, you quickly slip inside. You have a bit of time before the commotion dies down.
 
 (if: $shedItem is &quot;Branch Cutters&quot;)[ \
@@ -720,15 +725,15 @@ With the door unblocked, you quickly slip inside. You have a bit of time before 
 You grab grap a pair of branch cutters. You tuck them beneath your shirt, though it&#39;s pretty obvious you&#39;re carrying something. (set: $shedItem to &quot;&quot;)($addItem: &quot;Branch Cutters&quot;)(t8n: &quot;blur&quot;)(rerun: ?inventory)]] \
 (else:) [There&#39;s nothing here for you.]
 
-(link: &quot;Leave&quot;)[($progressTime:)(go-to: &quot;North Field&quot;)]</tw-passagedata><tw-passagedata pid="36" name="Gamblers 4" tags="" position="3475,200" size="100,100">(display: &quot;Gamblers Header&quot;)
+(link: &quot;Leave&quot;)[($progressTime:)(go-to: &quot;North Field&quot;)]</tw-passagedata><tw-passagedata pid="36" name="Gamblers 4" tags="" position="3475,200" size="100,100">(display: &quot;Gamblers Header&quot;) \
 The fight breaks up eventually.
 
 (link: &quot;Leave&quot;)[($progressTime:)(go-to: &quot;Common Area&quot;)]</tw-passagedata><tw-passagedata pid="37" name="Guard&#39;s Quarters" tags="Free-roam" position="1875,375" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;guardsQuarters&quot;) \
 ($uiHeader: (dm:
     &quot;S&quot;, [[North Field]],
-    ))
-[
+    )) \
+[ \
 	The guards&#39; quarters rests in front of you, one of the few buildings with a roofed porch. A couple guards sit outside talking among themselves, and you can hear voices coming from inside.
     \
     |evening)[ \
@@ -753,26 +758,26 @@ The fight breaks up eventually.
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
 ($uiHeader: (dm:
     &quot;W&quot;, [[Northeast Field]]
-    ))
+    )) \
 [[An important looking man-&gt;Starshina Conversation]] sits scribbling at a desk while another monitors a set of radio equipment.</tw-passagedata><tw-passagedata pid="39" name="First time Office" tags="" position="2325,100" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 Take the radio, please. ($addItem: &quot;Broken Radio&quot;)
 (link-reveal-goto: &quot;Take the radio&quot;, &quot;Office&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="40" name="Grigoriy Fixed Radio" tags="" position="4025,250" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 
 Congratulations. You now have a dead radio. It&#39;ll need batteries. ($addItem: &quot;Dead Radio&quot;)(set: $grigoriyFixDay to -1)(rerun: ?inventory)
 
 (link: &quot;...&quot;)[($progressTime:)($processMorningEvents: &quot;Upper Shacks&quot;)]</tw-passagedata><tw-passagedata pid="41" name="Frozen Body" tags="" position="4375,250" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:)) 
+($uiHeader: (dm:)) \ 
 You hear a commotion from outside.
 
 [[Investigate-&gt;Frozen Body 2]]</tw-passagedata><tw-passagedata pid="42" name="Gamblers Header" tags="" position="2850,350" size="100,100">(if: ($getTimePeriod:) is not &quot;Afternoon&quot;)[(redirect: &quot;Common Area&quot;)] \
 (set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
-(set: $currentLocation to ($camelcase: (passage:)&#39;s name)) \
-($uiHeader: (dm:))</tw-passagedata><tw-passagedata pid="43" name="#dailyEvents" tags="" position="750,75" size="100,100">{
+(set: $currentLocation to &quot;gamblers&quot;) \
+($uiHeader: (dm:)) \</tw-passagedata><tw-passagedata pid="43" name="#dailyEvents" tags="" position="750,75" size="100,100">{
 	(set: $morningEvents to (a:))
     (set: $enqueueMorningEvent to (macro: str-type _event, [
     	(if: _event is not in $morningEvents)[(set: $morningEvents to it + (a: _event))]
@@ -797,7 +802,7 @@ You hear a commotion from outside.
     	(if: $dayCount &lt;= $dreams&#39;s length)[(output-data: $dreams&#39;s ($dayCount))]
         (else:)[(output-data: &quot;&quot;)]
     ]))
-}</tw-passagedata><tw-passagedata pid="44" name="Caught with Cutters" tags="" position="2100,1325" size="100,100">($uiHeader: (dm:))
+}</tw-passagedata><tw-passagedata pid="44" name="Caught with Cutters" tags="" position="2100,1325" size="100,100">($uiHeader: (dm:)) \
 Hey, you can&#39;t have those! Pew pew ur dead now</tw-passagedata><tw-passagedata pid="45" name="Logging Territory (Day 1)" tags="" position="1850,1850" size="100,100">woah, it&#39;s day 1 in the logging territory</tw-passagedata><tw-passagedata pid="46" name="Logging Territory (Day 2)" tags="" position="2000,1850" size="100,100">&quot;I heard the guard&#39;s say that they&#39;re gonna start randomly executing prisoners.&quot;
 
 Holy crap you need to get out of here. (set: $startedEscape to true)</tw-passagedata><tw-passagedata pid="47" name="Dialogue Tree Test" tags="Story-Start dTree" position="3575,1450" size="100,100">(set: $nav2branch to (macro: str-type _targetBranch, [
@@ -832,11 +837,11 @@ Holy crap you need to get out of here. (set: $startedEscape to true)</tw-passage
     (link: &quot;Bye&quot;)[($progressTime:)(go-to: (history:)&#39;s last)]
 ]</tw-passagedata><tw-passagedata pid="49" name="Grigoriy (Alley)" tags="dTree" position="950,450" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;alley&quot;) \
-($uiHeader: (dm:))
-($embedDialogueTree: &quot;@Grigoriy&quot;)</tw-passagedata><tw-passagedata pid="50" name="Enter Fail (Guards)" tags="" position="1975,200" size="100,100">($uiHeader: (dm:))
+($uiHeader: (dm:)) \
+($embedDialogueTree: &quot;@Grigoriy&quot;)</tw-passagedata><tw-passagedata pid="50" name="Enter Fail (Guards)" tags="" position="1975,200" size="100,100">($uiHeader: (dm:)) \
 As you walk towards the door, multiple guards look at you with confused expressions. One of them gets up to block your path inside.
 &quot;Keep back, plennik.&quot;
-(link-reveal-goto: &quot;Walk away&quot;, &quot;Guard&#39;s Quarters&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="51" name="Take the shoes" tags="" position="2100,250" size="100,100">($uiHeader: (dm:))
+(link-reveal-goto: &quot;Walk away&quot;, &quot;Guard&#39;s Quarters&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="51" name="Take the shoes" tags="" position="2100,250" size="100,100">($uiHeader: (dm:)) \
 You grab the shoes and stuff them down your shirt.
 
 (link: &quot;...&quot;)[($progressTime:)(go-to: &quot;Guard&#39;s Quarters&quot;)]
@@ -845,7 +850,7 @@ You grab the shoes and stuff them down your shirt.
  \
 (set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;lowerShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 ($embedDialogueTree: &quot;@Redcap&quot;)</tw-passagedata><tw-passagedata pid="53" name="rootNode" tags="" position="3750,1500" size="100,100">($dBranch: &quot;Next node&quot;, &quot;branch1&quot;)</tw-passagedata><tw-passagedata pid="54" name="branch1" tags="" position="3625,1625" size="100,100">($dBranch: &quot;back to top&quot;, &quot;rootNode&quot;)</tw-passagedata><tw-passagedata pid="55" name="@Grigoriy-Tinker" tags="" position="300,1175" size="100,100">You now know Grigoriy is a tinker. (set: $grigoriyProgress to 2)
 ($dBranch: &quot;...&quot;, &quot;@Grigoriy&quot;)</tw-passagedata><tw-passagedata pid="56" name="@Grigoriy-Radio" tags="" position="150,1175" size="100,100">&quot;Yea I can fix that. I&#39;ll get it to you tomorrow&quot; \
 ($enqueueMorningEvent: &quot;Grigoriy Fixed Radio&quot;) \
@@ -891,13 +896,13 @@ You grab the shoes and stuff them down your shirt.
 
 ($dBranch: &quot;...&quot;, &quot;@Redcap&quot;)</tw-passagedata><tw-passagedata pid="63" name="Floorboards" tags="" position="1100,1125" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;lowerShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 After looking around the floor near Redcap&#39;s bed, you find that one of floorboards pushes in more than the others. Eventually you find a nice grip and pull at it, and up it comes, revealing the batteries.
 
 (link-reveal: &quot;Take them?&quot;)+(t8n: &quot;fade&quot;)+(t8n-time: 1.5s)[ Are you sure?
 	
     (t8n: &quot;fade&quot;)+(t8n-delay: 2s)+(t8n-time: 3s)[[[Yes.-&gt;Steal the Batteries]]]
-]</tw-passagedata><tw-passagedata pid="64" name="Steal the Batteries" tags="" position="1200,1250" size="100,100">($uiHeader: (dm:))
+]</tw-passagedata><tw-passagedata pid="64" name="Steal the Batteries" tags="" position="1200,1250" size="100,100">($uiHeader: (dm:)) \
 You take the batteries, stowing them safely in your pockets. Replacing the board carefully, you try to hide any evidence you were here.
 (link-reveal-goto: &quot;...&quot;, &quot;Lower Shacks&quot;)[($progressTime:)]
 ($addItem: &quot;Batteries&quot;)
@@ -905,49 +910,49 @@ You take the batteries, stowing them safely in your pockets. Replacing the board
 (t8n: &quot;blur&quot;)(rerun: ?inventory)</tw-passagedata><tw-passagedata pid="65" name="Complete Radio" tags="" position="2250,1325" size="100,100">($removeItem: &quot;Batteries&quot;) \
 ($removeItem: &quot;Dead Radio&quot;) \
  \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 You put the batteries in the radio. Woah, it&#39;s fixed now.
 (link-goto: &quot;...&quot;, (history:)&#39;s last)
 ($addItem: &quot;FM Radio&quot;)
 (t8n: &quot;blur&quot;)(rerun: ?inventory)</tw-passagedata><tw-passagedata pid="66" name="Execution" tags="" position="4200,275" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 
 You hear a commotion coming from outside.
 
 [[Investigate-&gt;Execution 2]]</tw-passagedata><tw-passagedata pid="67" name="Execution 2" tags="" position="4200,400" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;commonArea&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 
 Redcap gets shot.
 
 (link: &quot;...&quot;)[($progressTime:)($processMorningEvents: &quot;Common Area&quot;)]
 (set: $capState to &quot;dead&quot;)</tw-passagedata><tw-passagedata pid="68" name="Frozen Body 2" tags="" position="4375,375" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:)) 
+($uiHeader: (dm:)) \ 
 Truck arrives with frozen body. You now know escape is possible.
 
 (link-reveal-goto: &quot;...&quot;, &quot;Logging Territory&quot;)[($skipTime: false)]</tw-passagedata><tw-passagedata pid="69" name="Fight" tags="" position="4550,275" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:)) 
+($uiHeader: (dm:)) \ 
 You&#39;re feeling particularly hungry today.
 
 [[Go get breakfast-&gt;Fight 2]]
 </tw-passagedata><tw-passagedata pid="70" name="Fight 2" tags="" position="4550,400" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;commonArea&quot;) \
-($uiHeader: (dm:)) 
+($uiHeader: (dm:)) \ 
 Food rations are getting cut back due to shortages. Fight breaks out.
 
 [[Break up the fight-&gt;Fight 3]]
 </tw-passagedata><tw-passagedata pid="71" name="Fight 3" tags="" position="4550,525" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;commonArea&quot;) \
-($uiHeader: (dm:)) 
+($uiHeader: (dm:)) \ 
 You break up the fight. Head guard takes an interest in you. Says that people are smuggling in contraband somehow, and wants you to find the people responsible. Promises you a comfy reward.
 
 (link-reveal-goto: &quot;...&quot;, &quot;Logging Territory&quot;)[($skipTime: false)]
 (set: $lookingForContraband to true)</tw-passagedata><tw-passagedata pid="72" name="Sermon" tags="dTree" position="450,600" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;alley&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 ($embedDialogueTree: &quot;@Sermon&quot;)</tw-passagedata><tw-passagedata pid="73" name="@Sermon" tags="" position="450,725" size="100,100">(if: $churchKnowsYou)[ \
 	Insert Sermon here
     
@@ -980,26 +985,26 @@ You know about the town now. \
 You know about confessions now. (set: $knowsConfessions to true)
 ($dBranch: &quot;...&quot;, &quot;@ChurchGroup&quot;)</tw-passagedata><tw-passagedata pid="78" name="Spy on them" tags="" position="600,600" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;alley&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 You take to the corner of one of the buildings. It&#39;s hard to hear, but at one point you see Abram pass -insert contraband here- to the guy. (set: $knowsAbramContraband to true)
 (link-reveal-goto: &quot;...&quot;, &quot;Alley&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="79" name="Watch them" tags="" position="1725,1250" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;southField&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 You see one of the guards pocket something out of a marked crate.
 (set: $knowsTraitorGuard to true)
 (link-reveal-goto: &quot;...&quot;, &quot;South Field&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="80" name="Handoff" tags="" position="4725,250" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 Returning to your bed, sleep quickly overtakes you.
 
 Try as you might to sleep, you&#39;re awakened by hushed voices.
 
-[[Investigate-&gt;Handoff 2]]</tw-passagedata><tw-passagedata pid="81" name="Handoff 2" tags="" position="4725,375" size="100,100">($uiHeader: (dm:))
+[[Investigate-&gt;Handoff 2]]</tw-passagedata><tw-passagedata pid="81" name="Handoff 2" tags="" position="4725,375" size="100,100">($uiHeader: (dm:)) \
 You now know that Abram and the guard are the ones involved with contraband.
 (set: $knowsContrabandRing to true)
 [[...-&gt;Night]]</tw-passagedata><tw-passagedata pid="82" name="Starshina Conversation" tags="dTree" position="3175,825" size="100,100">(set: $mapOverlay to &quot;outdoorsOverlay&quot;) \
 (set: $currentLocation to &quot;office&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 ($embedDialogueTree: &quot;@Starshina&quot;)</tw-passagedata><tw-passagedata pid="83" name="@Starshina" tags="" position="3175,975" size="100,100">Starshina Romanov looks up. &quot;What is it you want?&quot;
 
 (if: not $stakeoutPlanned)[ \
@@ -1031,27 +1036,27 @@ You now know that Abram and the guard are the ones involved with contraband.
 
 (link-reveal-goto: &quot;...&quot;, &quot;Office&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="89" name="Stakeout" tags="" position="4900,275" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 Tonight the stakeout happens.
 
 [[Next-&gt;Stakeout 2]]</tw-passagedata><tw-passagedata pid="90" name="Stakeout 2" tags="" position="4900,400" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 Wow, stakeout happened. (set: $didStakeout to true) (set: $lookingForContraband to false)(set: $abramDead to true)
 You get a jacket. ($addItem: &quot;Guard Jacket&quot;)(t8n: &quot;blur&quot;)(rerun: ?inventory)
 
 [[Next-&gt;Stakeout 3]]</tw-passagedata><tw-passagedata pid="91" name="Stakeout 3" tags="" position="4900,525" size="100,100">(set: $mapOverlay to &quot;none&quot;) \
 (set: $currentLocation to &quot;upperShacks&quot;) \
-($uiHeader: (dm:))
+($uiHeader: (dm:)) \
 You don&#39;t dream tonight. Not after what you did.
 
-(link: &quot;...&quot;)[($skipTime: false)($processMorningEvents: &quot;Upper Shacks&quot;)]</tw-passagedata><tw-passagedata pid="92" name="Escape Finalization" tags="" position="2400,1325" size="100,100">($uiHeader: (dm:))
+(link: &quot;...&quot;)[($skipTime: false)($processMorningEvents: &quot;Upper Shacks&quot;)]</tw-passagedata><tw-passagedata pid="92" name="Escape Finalization" tags="" position="2400,1325" size="100,100">($uiHeader: (dm:)) \
 
 You&#39;ve got everything you need. Lets do this. Now to wait for nightfall.
-(link-goto: &quot;...&quot;, (history:)&#39;s last)</tw-passagedata><tw-passagedata pid="93" name="Escape" tags="" position="5075,250" size="100,100">Wow you did it. You win. Hooray.</tw-passagedata><tw-passagedata pid="94" name="Radio Guard" tags="" position="1550,1225" size="100,100">($uiHeader: (dm:))
+(link-goto: &quot;...&quot;, (history:)&#39;s last)</tw-passagedata><tw-passagedata pid="93" name="Escape" tags="" position="5075,250" size="100,100">Wow you did it. You win. Hooray.</tw-passagedata><tw-passagedata pid="94" name="Radio Guard" tags="" position="1550,1225" size="100,100">($uiHeader: (dm:)) \
 &quot;Thanks, this&#39;ll keep me busy.&quot;
 (set: $gateItem to &quot;FM Radio&quot;)($removeItem: &quot;FM Radio&quot;)
-(link-reveal-goto: &quot;...&quot;, &quot;Gate&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="95" name="Locked Door" tags="" position="1850,175" size="100,100">($uiHeader: (dm:))
+(link-reveal-goto: &quot;...&quot;, &quot;Gate&quot;)[($progressTime:)]</tw-passagedata><tw-passagedata pid="95" name="Locked Door" tags="" position="1850,175" size="100,100">($uiHeader: (dm:)) \
 You try the door, but it&#39;s locked. Guess one of the guards had some presence of mind.
 (link-reveal-goto: &quot;Walk away&quot;, &quot;Guard&#39;s Quarters&quot;)[($progressTime:)]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
