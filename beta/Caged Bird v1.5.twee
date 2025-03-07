@@ -94,6 +94,8 @@ Caged Bird
 (set: $stepsWithCutters to 0)
 (set: $stepsWithCuttersLimit to 3)
 
+(set: $notesChanged to false)
+
 <!--CHARACTER INTERACTIONS-->
 (set: $abramName to "a broad-shouldered prisoner")
 (set: $knowsAbram to false)
@@ -146,6 +148,8 @@ Caged Bird
 
 <!--Logic Checks-->
 (set: $logicChecks to [{
+	(if: $notesChanged)[(change: ?notesButton, (link-style:(text-color: yellow)))]
+    
 	(if: $inventory contains "Branch Cutters" and (passage:)'s name is not "Caught with Cutters")[
         (set: $stepsWithCutters to it + 1)
     	(if: $stepsWithCutters > $stepsWithCuttersLimit)[ \
@@ -166,10 +170,6 @@ Caged Bird
 
 <!--Notes setup (for keeping track of progress)-->
 (set: $notesBody to [ \
-	(if: $gotJacket)[✔ I can use the jacket to move around at night.] \
-    (else-if: $lookingForContraband or $stakeoutPlanned)[- I can get a jacket if I help the Starshina] \
-    (else:)[- Need a way to work stealthily]
-    
     (if: $shedItem is "Branch Cutters")[- I need a way to cut through the fence] \
     (else:)[✔ I can use the branch cutters to cut through the fence]
     
@@ -179,6 +179,11 @@ Caged Bird
     
     (if: $knowsTown)[✔ I can head for the town after I escape] \
     (else:)[- Where am I gonna go after I escape?]
+    
+	(if: $gotJacket)[✔ I can use the jacket to move around at night] \
+    (else-if: $didStakeout)[- The Starshina owes me a jacket] \
+    (else-if: $lookingForContraband or $stakeoutPlanned)[- I can get a jacket if I help the Starshina] \
+    (else:)[- Need a way to work stealthily]
 ])
 }
 
@@ -374,6 +379,8 @@ $logicChecks \
 	<script>
   	document.getElementsByName("notes")[0].style.right = "-40%";
   </script>
+    (change: ?notesButton, (link-style:(text-color: #4169E1)))
+    (set: $notesChanged to false)
     (output-data: "")
 ]))
 
@@ -422,7 +429,7 @@ The shorter prisoner looks at him, irritated. "Well, I wasn't there when they to
 The old man keeps arguing with him, but you sit back, processing what you had just been told. An abandoned town, not ten miles away? It was a longshot, but maybe...
 
 ($dBranch: "...", "@ChurchGroup")
-(set: $knowsTown to true)(rerun: ?notes)
+(if: not $knowsTown)[(set: $knowsTown to true)(set: $notesChanged to true)]
 
 
 :: @ChurchGroup-Batteries {"position":"3300,625","size":"100,100"}
@@ -459,7 +466,7 @@ One of them gestures towards the Shacks. "He's over in the alley, taking confess
     ["You need to develop an appreciation for]<fadein| the finer arts of life, Alexei. There's more to life than getting blackout drunk! I'm telling you, one day I'm gonna take you back to my place; I have this lovely vinyl player. We'll put on some Rachmaninoff, you'll finally get some true Russian culture." (change: ?fadein, (char-style: via (text-color: (hsl: 0, 1, 1, pos / 40))))
     (after: time + 2.5s)+(t8n: "fade")[==
     The lanky guard shakes his head and smiles. "Yea, Dmitri, like we'll even see each other once we're out of this place." "You never know," replies the gateman. "There's always a possi-"
-    He cuts off when he sees you listening. "Can't help you right now, *devushka*. Dont' you know it's rude to interrupt people?" (set: $gateConversation to true)($addGuardName: "Dmitri")($addGuardName: "Alexei")
+    He cuts off when he sees you listening. "Can't help you right now, *devushka*. Dont' you know it's rude to interrupt people?" (set: $gateConversation to true)($addGuardName: "Dmitri")($addGuardName: "Alexei")(set: $notesChanged to true)
     
     (if: $inventory contains "FM Radio")[($dBranch: "\"I have something for you.\"", "Radio")]
     (link-reveal-goto: "\"Nevermind\"", "South Field")[($progressTime:)]]
@@ -875,7 +882,7 @@ He leans forward again and returns to his work. "I need you to find whatever rat
 
 (link-reveal-goto: "Leave", "Northeast Field")[($progressTime:)]
 ($addItem: "Guard Jacket")(t8n: "blur")(rerun: ?inventory)
-(set: $gotJacket to true)
+(set: $gotJacket to true)(set: $notesChanged to true)
 
 
 :: @Starshina-Smuggler {"position":"3325,1100","size":"100,100"}
@@ -1099,7 +1106,7 @@ With the door unblocked, you quickly slip inside. You have a bit of time before 
 
 (if: $shedItem is "Branch Cutters")[ \
 (link: "Take the branch cutters")+(t8n: "fade")[ \
-You grab grap a pair of branch cutters. You tuck them beneath your shirt, though it's pretty obvious you're carrying something. (set: $shedItem to "")($addItem: "Branch Cutters")(t8n: "blur")(rerun: ?inventory)]] \
+You grab grap a pair of branch cutters. You tuck them beneath your shirt, though it's pretty obvious you're carrying something. (set: $shedItem to "")($addItem: "Branch Cutters")(t8n: "blur")(rerun: ?inventory)(set: $notesChanged to true)]] \
 (else:) [There's nothing here for you.]
 
 (link: "Leave")[($progressTime:)(go-to: "North Field")]
@@ -1341,7 +1348,7 @@ The Starshina turns towards you, arms outstretched. "Then it's settled! You do t
 He sits back down at his desk. "Now, be gone, *devushka*. Much to do, much to do, for the both of us. Those trees won't cut themselves."
 
 (link-reveal-goto: "Leave", "Logging Territory")[($skipTime: false)]
-(set: $lookingForContraband to true)
+(set: $lookingForContraband to true)(set: $notesChanged to true)
 
 
 :: First time Office {"position":"2325,100","size":"100,100"}
@@ -1473,7 +1480,7 @@ Many rounds have passed now, but out of the corner of your eye, you notice the d
 ](alexeiHere| \
 [ \
 	($uiHeader: (dm:)) \
-	"Did he now? Seems unlikely..." the guard is still suspicious, but he eyes the radio eagerly. "Well, maybe this is his way of finally coming around. Tell him thanks for me, alright? Alright, off with you now." He shoos you away. ($removeItem: "FM Radio")(set: $gateItem to "FM Radio")
+	"Did he now? Seems unlikely..." the guard is still suspicious, but he eyes the radio eagerly. "Well, maybe this is his way of finally coming around. Tell him thanks for me, alright? Alright, off with you now." He shoos you away. ($removeItem: "FM Radio")(set: $gateItem to "FM Radio")(set: $notesChanged to true)
     
     (link-reveal-goto: "...", "South Field")[($progressTime:)]
 ](alexeiNotHere|
@@ -1519,7 +1526,7 @@ The gateman looks at you dubiously. "...eh- right..." He waves over some nearby 
 
 :: Gateman-Nikolaj {"position":"1200,1900","size":"100,100"}
 ($uiHeader: (dm:)) \
-"Did he now?" the guard says as he eyes the radio. "He always was a generous man. Tell him thanks for me, alright? Alright, off with you now." He shoos you away. ($removeItem: "FM Radio")(set: $gateItem to "FM Radio")
+"Did he now?" the guard says as he eyes the radio. "He always was a generous man. Tell him thanks for me, alright? Alright, off with you now." He shoos you away. ($removeItem: "FM Radio")(set: $gateItem to "FM Radio")(set: $notesChanged to true)
     
 (link-reveal-goto: "...", "South Field")[($progressTime:)]
 
@@ -1899,7 +1906,7 @@ Things change over time each day. Use this to your advantage. Sometimes, the bes
     Out past the chainlink fence lies an endless snowy expanse.
 ] \
 |evening)[ \
-	You can see a tall, clean shaven guard chatting with the |gateLink>[gate controller].[ A radio can be heard playing classical piano in the background.](radio| Through the chainlink fence, you can see the snowy plains painted by the evening sun.
+	You can see a tall, clean shaven guard chatting loudly with the |gateLink>[gate controller].[ A radio can be heard playing classical piano in the background.](radio| Through the chainlink fence, you can see the snowy plains painted by the evening sun.
 ]
 {
 	($showTimeMessages:)
@@ -2166,4 +2173,8 @@ tw-hook[name=notes] {
 	width: 40%; 
 	height: 100%; /* Full height */
 	transition: right 1.5s ease 0s;
+}
+
+tw-enchantment:has(tw-hook[name=notesbutton]) {
+  position: static;
 }
