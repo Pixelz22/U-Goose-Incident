@@ -1253,7 +1253,7 @@ Two of the guards are responsible for taking the crates from the trucks and movi
     [&quot;You need to develop an appreciation for]&lt;fadein| the finer arts of life, Alexei. There&#39;s more to life than getting blackout drunk! I&#39;m telling you, one day I&#39;m gonna take you back to my place; I have this lovely vinyl player. We&#39;ll put on some Rachmaninoff, you&#39;ll finally get some true Russian culture.&quot; (change: ?fadein, (char-style: via (text-color: (hsl: 0, 1, 1, pos / 40))))
     (after: time + 2.5s)+(t8n: &quot;fade&quot;)[==
     The lanky guard shakes his head and smiles. &quot;Yea, Dmitri, like we&#39;ll even see each other once we&#39;re out of this place.&quot; &quot;You never know,&quot; replies the gateman. &quot;There&#39;s always a possi-&quot;
-    He cuts off when he sees you listening. &quot;Can&#39;t help you right now, *devushka*. Dont&#39; you know it&#39;s rude to interrupt people?&quot; (set: $gateConversation to true)($addGuardName: &quot;Dmitri&quot;)($addGuardName: &quot;Alexei&quot;)(set: $notesChanged to true)
+    He cuts off when he sees you listening. &quot;Can&#39;t help you right now, *devushka*. Don&#39;t you know it&#39;s rude to interrupt people?&quot; (set: $gateConversation to true)($addGuardName: &quot;Dmitri&quot;)($addGuardName: &quot;Alexei&quot;)(set: $notesChanged to true)
     
     (if: $inventory contains &quot;FM Radio&quot;)[($dBranch: &quot;\&quot;I have something for you.\&quot;&quot;, &quot;Radio&quot;)]
     (link-reveal-goto: &quot;\&quot;Nevermind\&quot;&quot;, &quot;South Field&quot;)[($progressTime:)]]
