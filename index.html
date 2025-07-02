@@ -763,7 +763,7 @@ With the door unblocked, you quickly slip inside. You have a bit of time before 
 
 (if: $shedItem is &quot;Branch Cutters&quot;)[ \
 (link: &quot;Take the branch cutters&quot;)+(t8n: &quot;fade&quot;)[ \
-You grab grap a pair of branch cutters. You tuck them beneath your shirt, though it&#39;s pretty obvious you&#39;re carrying something. (set: $shedItem to &quot;&quot;)($addItem: &quot;Branch Cutters&quot;)(t8n: &quot;blur&quot;)(rerun: ?inventory)(set: $notesChanged to true)]] \
+You grab a pair of branch cutters. You tuck them beneath your shirt, though it&#39;s pretty obvious you&#39;re carrying something. (set: $shedItem to &quot;&quot;)($addItem: &quot;Branch Cutters&quot;)(t8n: &quot;blur&quot;)(rerun: ?inventory)(set: $notesChanged to true)]] \
 (else:) [There&#39;s nothing here for you.]
 
 (link: &quot;Leave&quot;)[($progressTime:)(go-to: &quot;North Field&quot;)]</tw-passagedata><tw-passagedata pid="33" name="Gamblers 4" tags="" position="3475,200" size="100,100">(display: &quot;Gamblers Header&quot;) \
